@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'session.dart';
 
 void main() => runApp(Randomizer());
 
@@ -7,8 +8,6 @@ class Randomizer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
-      
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -28,14 +27,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-
-      _counter++;
-    });
-  }
+  Session _session = Session(['Christian', 'Ganjina', 'Uttam']);
+  String currentPickedStudent = '';
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Christian',
+              currentPickedStudent
             ),
             RaisedButton(
               onPressed: () {
-                print('start randomizer');
+                setState(() => currentPickedStudent = _session.pickRandomStudent());
               },
               child: Text('START'),
             )
