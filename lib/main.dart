@@ -3,6 +3,19 @@ import 'session.dart';
 
 void main() => runApp(Randomizer());
 
+// void _showModal() {
+//     Future<void> future = showModalBottomSheet<void>(
+//       context:,
+//       builder: (BuildContext context) {
+//         return Container(height: 260.0, child: Text('I am text'));
+//       },
+//     );
+//     future.then((void value) => _closeModal(value));
+// }
+// void _closeModal(void value) {
+//     print('modal closed');
+// }
+
 class Randomizer extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -36,6 +49,15 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: <Widget>[  IconButton(
+            icon: const Icon(Icons.people),
+            tooltip: 'Show Snackbar',
+            onPressed: () {
+              _onButtonPressed(context,_session);
+              //Do something
+            },
+          ),
+          ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -51,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+      
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -61,7 +84,9 @@ class _MyHomePageState extends State<MyHomePage> {
             RaisedButton(
               onPressed: () {
                 setState(() => currentPickedStudent = _session.pickRandomStudent());
-              },
+                },
+                // currentPickedStudent = _session.pickRandomStudent();
+              
               child: Text('START'),
             )
           ],
@@ -70,3 +95,30 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+void _onButtonPressed(BuildContext context, Session _session) {
+  showModalBottomSheet(
+    context:context,
+    builder: (context){
+      return Scaffold(
+      body: new ListView.builder(
+        itemCount:_session.students.length,
+        itemBuilder: (BuildContext ctxt, int index) {
+          return Card(
+            child: ListTile(
+              onTap:()=>print("TAPPEED"),
+              title: Text(_session.students[index]),
+              trailing: Icon(Icons.remove_circle_outline),
+            ),
+          
+          );
+          // return new Text(_session.students[index]);
+        })
+      // return Column(
+      //   children: <Widget>[
+      //   ],
+      //   );
+      );
+    });
+}
+
