@@ -31,7 +31,17 @@ class Randomizer extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({ Key key }) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  String selected = 'Class 1';
+
   @override
   Widget build(BuildContext buildContext) {
     return Scaffold(
@@ -46,33 +56,28 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(child: Text('CLASS 1')),
-              ListTile(title: Text('EDIT CLASS'), onTap: () => print('edit class!'))
-            ],
-          ),
-        ),
         body: Consumer<Session>(builder: (consumerContext, session, child) {
           return Center(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('Select a randomizer'),
+                  Text('Please select a class'),
                   DropdownButton<String>(
-                    value: 'Wheel',
-                    items: <String>['Wheel', 'Two', 'Free', 'Four'].map<DropdownMenuItem<String>>((String value) {
+                    value: selected,
+                    items: <String>['Class 1', 'Class 2', 'Class 3 ', 'Class 4'].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
                       );
                     }).toList(),
-                  )
+                    onChanged: (String value) {
+                      print(value);
+                      setState(() => selected = value );
+                    },
+                  ),
                 ],
               ),
               Text(session.pickedStudent.isEmpty ? 'Click "start" to pick a random student.' : session.pickedStudent),
