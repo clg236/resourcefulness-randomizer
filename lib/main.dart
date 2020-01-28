@@ -10,6 +10,7 @@ class Randomizer extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
@@ -24,8 +25,9 @@ class Randomizer extends StatelessWidget {
           initialRoute: '/',
           routes: {
             '/': (context) => HomeScreen(),
-            '/add_student': (context) => AddStudentScreen(),
-            '/list_students': (context) => ListStudentsScreen(),
+            // These are now bottom module sheets
+            // '/add_student': (context) => AddStudentScreen(),
+            // '/list_students': (context) => ListStudentsScreen(),
           },
         ));
   }
@@ -51,7 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               icon: const Icon(Icons.people),
               onPressed: () {
-                Navigator.pushNamed(buildContext, "/list_students");
+                // Navigator.pushNamed(buildContext, "/list_students");
+                ListStudentsScreen().build(context);
               },
             ),
           ],
